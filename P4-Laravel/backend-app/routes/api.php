@@ -15,5 +15,5 @@ Route::get('/animals', function() {
 
 Route::get('/animals', [AnimalsController::class, 'index']);
 Route::post('/animals', [AnimalsController::class, 'store']);
-Route::put('/animals{id}', [AnimalsController::class, 'update']);
-Route::delete('/animals{id}', [AnimalsController::class, 'delete']);
+Route::put('/animals/{id}', [AnimalsController::class, 'update']);
+Route::delete('/animals/{id}', [AnimalsController::class, 'destroy']);

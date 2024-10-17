@@ -6,17 +6,52 @@ use Illuminate\Http\Request;
 
 class AnimalsController extends Controller
 {
+    private $animals = [];
+
+    public function __construct() {
+        $this->animals = ['Kucing Anggora', 'Ayam', 'Ular', 'Siput'];
+    }
+
     public function index() {
-        $hewan = ['alisu','aliasu','alipasu'];
-        echo "Menampilkan data animals";
+        echo "List Hewan:<br>";
+        foreach ($this->animals as $index => $animal) {
+            echo "- " . $animal . "<br>";
+        }
     }
-    public function store() {
-        echo "Menambahkan hewan baru";
+
+    public function store(Request $request) {
+        $newAnimal = $request->input('animal'); 
+        $this->animals[] = $newAnimal;
+        echo "Hewan baru bernama '$newAnimal' telah ditambahkan.<br>";
+        $this->index();
     }
-    public function update($id) {
-        echo "Mengupdate data hewan id $id";
+
+    public function update(Request $request, $id) {
+        $newAnimal = $request->input('animal');
+        
+        if (isset($this->animals[$id])) {
+            $oldAnimal = $this->animals[$id];
+            $this->animals[$id] = $newAnimal;
+            
+            echo "Hewan '$oldAnimal' berhasil diubah menjadi '$newAnimal'.<br><br>";
+        } else {
+            echo "Hewan pada posisi $id tidak ditemukan.<br><br>";
+        }
+        
+        $this->index();
     }
+
     public function delete($id) {
-        echo "Menghapus data hewan id $id";
+        if (isset($this->animals[$id])) {
+            $deletedAnimal = $this->animals[$id];
+            
+            unset($this->animals[$id]);
+            
+            echo "Hewan '$deletedAnimal' berhasil dihapus dari daftar.<br><br>";
+        } else {
+            echo "Hewan pada posisi $id tidak ditemukan.<br><br>";
+        }
+        
+        $this->index();
     }
 }
