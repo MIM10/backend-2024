@@ -41,7 +41,7 @@ class AnimalsController extends Controller
         $this->index();
     }
 
-    public function delete($id) {
+    public function destroy($id) {
         if (isset($this->animals[$id])) {
             $deletedAnimal = $this->animals[$id];
             
