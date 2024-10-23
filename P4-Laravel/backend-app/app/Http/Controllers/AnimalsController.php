@@ -9,20 +9,20 @@ class AnimalsController extends Controller
     private $animals = [];
 
     public function __construct() {
-        $this->animals = ['Kucing Anggora', 'Ayam', 'Ular', 'Siput'];
+        $this->animals = ['Kucing Anggora', 'Elang', 'Ular', 'Siput'];
     }
 
     public function index() {
-        echo "List Hewan:<br>";
+        echo "List Hewan:\n";
         foreach ($this->animals as $index => $animal) {
-            echo "- " . $animal . "<br>";
+            echo "- " . $animal . "\n";
         }
     }
 
     public function store(Request $request) {
         $newAnimal = $request->input('animal'); 
         $this->animals[] = $newAnimal;
-        echo "Hewan baru bernama '$newAnimal' telah ditambahkan.<br>";
+        echo "Hewan baru bernama '$newAnimal' telah ditambahkan.\n";
         $this->index();
     }
 
@@ -33,9 +33,9 @@ class AnimalsController extends Controller
             $oldAnimal = $this->animals[$id];
             $this->animals[$id] = $newAnimal;
             
-            echo "Hewan '$oldAnimal' berhasil diubah menjadi '$newAnimal'.<br><br>";
+            echo "Hewan '$oldAnimal' telah diubah menjadi '$newAnimal'.\n\n";
         } else {
-            echo "Hewan pada posisi $id tidak ditemukan.<br><br>";
+            echo "Hewan pada index $id tidak ditemukan.\n\n";
         }
         
         $this->index();
@@ -47,9 +47,9 @@ class AnimalsController extends Controller
             
             unset($this->animals[$id]);
             
-            echo "Hewan '$deletedAnimal' berhasil dihapus dari daftar.<br><br>";
+            echo "Hewan '$deletedAnimal' telah dihapus dari daftar.\n\n";
         } else {
-            echo "Hewan pada posisi $id tidak ditemukan.<br><br>";
+            echo "Hewan pada posisi $id tidak ditemukan.\n\n";
         }
         
         $this->index();
