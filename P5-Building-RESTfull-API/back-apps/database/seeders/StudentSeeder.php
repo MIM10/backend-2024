@@ -15,11 +15,17 @@ class StudentSeeder extends Seeder
     {
         DB::table('student')->insert([
             [
-                "nama" => "fikri",
+                "nama" => "Mucaa",
+                "nim" => "0001",
+                "email" => "mucaa@gmail.com",
+                "jurusan" => "TI",
+            ],
+            [
+                "nama" => "Nisa",
                 "nim" => "0002",
-                "email" => "fikri@gmail.com",
+                "email" => "nisa@gmail.com",
                 "jurusan" => "SI",
-            ]
+            ],
         ]);
     }
 }
