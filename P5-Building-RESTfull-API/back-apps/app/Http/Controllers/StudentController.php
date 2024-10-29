@@ -50,21 +50,51 @@ class StudentController extends Controller
 
     public function show(string $id)
     {
-        //
-    }
+        $student = Student::find($id);
 
-    public function edit(string $id)
-    {
-        //
+        if ($student) {
+            return response()->json($student, 200);
+        }
+
+        return response()->json(['message' => 'Data tidak ditemukan!'], 404);
     }
 
     public function update(Request $request, string $id)
     {
-        //
+        $student = Student::find($id);
+
+        if (!$student) {
+            return response()->json(['message' => 'Data tidak ditemukan!'], 404);
+        }
+
+        $input = [
+            'nama' => $request->nama,
+            'nim' => $request->nim,
+            'email' => $request->email,
+            'jurusan' => $request->jurusan,
+        ];
+
+        $student->update($input);
+
+        $data = [
+            'message' => 'Berhasil mengubah data',
+            'data' => $student,
+        ];
+
+        return response()->json($data, 200);
     }
 
     public function destroy(string $id)
     {
-        //
+        $student = Student::find($id);
+
+        $student->delete();
+
+        $data = [
+            'message' => 'Berhasil menghapus data',
+            'data' => $student,
+        ];
+
+        return response()->json($data, 200);
     }
 }
