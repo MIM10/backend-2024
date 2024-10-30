@@ -9,26 +9,18 @@ class StudentController extends Controller
 {
     public function index()
     {
-        // melihat data
-        // query builder student = DB::table('student')->get();
-        $student = Student::All(); // menggunakan eloquent
+        $student = Student::All();
 
         $data = [
-            'message' => 'Berhasil akses data',
+            'message' => 'Data berhasil diakses',
             'data' => $student
         ];
 
         return response()->json($data,200);
     }
 
-    public function create()
-    {
-        //
-    }
-
     public function store(Request $request)
     {
-        // menangkap data request
         $input = [
             'nama' => $request->nama,
             'nim' => $request->nim,
@@ -36,15 +28,13 @@ class StudentController extends Controller
             'jurusan' => $request->jurusan
         ];
 
-        // menggunakan model student untuk insert data
         $student = Student::create($input);
 
         $data = [
-            'message' => 'Berhasil menambah data',
+            'message' => 'Data berhasil ditambah',
             'data' => $student
         ];
 
-        // mengembalikan data json dan kode 201(resource berhasil ditambahkan)
         return response()->json($data,201);
     }
 
@@ -77,7 +67,7 @@ class StudentController extends Controller
         $student->update($input);
 
         $data = [
-            'message' => 'Berhasil mengubah data',
+            'message' => 'Data berhasil diubah',
             'data' => $student,
         ];
 
@@ -91,7 +81,7 @@ class StudentController extends Controller
         $student->delete();
 
         $data = [
-            'message' => 'Berhasil menghapus data',
+            'message' => 'Data berhasil di hapus',
             'data' => $student,
         ];
 
