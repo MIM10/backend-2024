@@ -9,18 +9,30 @@ class StudentController extends Controller
 {
     public function index()
     {
-        $student = Student::All();
+        // melihat data
+        // query builder student = DB::table('student')->get();
+        $student = Student::All(); // menggunakan eloquent
 
-        $data = [
-            'message' => 'Data berhasil diakses',
-            'data' => $student
-        ];
+        if ($student) {
+            $data = [
+                'message' => 'Berhasil akses data',
+                'data' => $student
+            ];
 
-        return response()->json($data,200);
+            return response()->json($data,200);
+        } else {
+            return response()->json(['message' => 'Data tidak ditemukan!'], 404);
+        }
+    }
+
+    public function create()
+    {
+        //
     }
 
     public function store(Request $request)
     {
+        // menangkap data request
         $input = [
             'nama' => $request->nama,
             'nim' => $request->nim,
@@ -28,13 +40,15 @@ class StudentController extends Controller
             'jurusan' => $request->jurusan
         ];
 
+        // menggunakan model student untuk insert data
         $student = Student::create($input);
 
         $data = [
-            'message' => 'Data berhasil ditambah',
+            'message' => 'Berhasil menambah data',
             'data' => $student
         ];
 
+        // mengembalikan data json dan kode 201(resource berhasil ditambahkan)
         return response()->json($data,201);
     }
 
@@ -67,7 +81,7 @@ class StudentController extends Controller
         $student->update($input);
 
         $data = [
-            'message' => 'Data berhasil diubah',
+            'message' => 'Berhasil mengubah data',
             'data' => $student,
         ];
 
@@ -81,7 +95,7 @@ class StudentController extends Controller
         $student->delete();
 
         $data = [
-            'message' => 'Data berhasil di hapus',
+            'message' => 'Berhasil menghapus data',
             'data' => $student,
         ];
 
