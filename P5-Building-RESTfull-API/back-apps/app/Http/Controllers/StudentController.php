@@ -38,12 +38,6 @@ class StudentController extends Controller
             'nim' => 'required|string|max:20',
             'email' => 'required|email',
             'jurusan' => 'required|string|max:100'
-        ], [
-            'nama.required' => 'Field nama harus diisi.',
-            'nim.required' => 'Field NIM harus diisi.',
-            'email.required' => 'Field email harus diisi.',
-            'email.email' => 'Format email tidak valid.',
-            'jurusan.required' => 'Field jurusan harus diisi.',
         ]);
     
         if ($validator->fails()) {
@@ -54,7 +48,6 @@ class StudentController extends Controller
         }
     
         $input = $validator->validated();
-    
         $student = Student::create($input);
     
         $data = [
