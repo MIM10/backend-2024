@@ -33,7 +33,6 @@ class StudentController extends Controller
 
     public function store(Request $request)
     {
-        // Membuat validator
         $validator = Validator::make($request->all(), [
             'nama' => 'required|string|max:255',
             'nim' => 'required|string|max:20',
@@ -47,7 +46,6 @@ class StudentController extends Controller
             'jurusan.required' => 'Field jurusan harus diisi.',
         ]);
     
-        // Memeriksa apakah validasi gagal
         if ($validator->fails()) {
             return response()->json([
                 'message' => 'Validasi gagal',
@@ -55,18 +53,15 @@ class StudentController extends Controller
             ], 422);
         }
     
-        // Menangkap data request
         $input = $validator->validated();
     
-        // Menggunakan model student untuk insert data
         $student = Student::create($input);
     
         $data = [
             'message' => 'Berhasil menambah data',
             'data' => $student
         ];
-    
-        // Mengembalikan data JSON dan kode 201 (resource berhasil ditambahkan)
+        
         return response()->json($data, 201);
     }
 
