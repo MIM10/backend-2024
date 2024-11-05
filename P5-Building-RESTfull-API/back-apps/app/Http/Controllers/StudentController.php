@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Student;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class StudentController extends Controller
 {
@@ -32,24 +33,41 @@ class StudentController extends Controller
 
     public function store(Request $request)
     {
-        // menangkap data request
-        $input = [
-            'nama' => $request->nama,
-            'nim' => $request->nim,
-            'email' => $request->email,
-            'jurusan' => $request->jurusan
-        ];
-
-        // menggunakan model student untuk insert data
+        // Membuat validator
+        $validator = Validator::make($request->all(), [
+            'nama' => 'required|string|max:255',
+            'nim' => 'required|string|max:20',
+            'email' => 'required|email',
+            'jurusan' => 'required|string|max:100'
+        ], [
+            'nama.required' => 'Field nama harus diisi.',
+            'nim.required' => 'Field NIM harus diisi.',
+            'email.required' => 'Field email harus diisi.',
+            'email.email' => 'Format email tidak valid.',
+            'jurusan.required' => 'Field jurusan harus diisi.',
+        ]);
+    
+        // Memeriksa apakah validasi gagal
+        if ($validator->fails()) {
+            return response()->json([
+                'message' => 'Validasi gagal',
+                'errors' => $validator->errors()
+            ], 422);
+        }
+    
+        // Menangkap data request
+        $input = $validator->validated();
+    
+        // Menggunakan model student untuk insert data
         $student = Student::create($input);
-
+    
         $data = [
             'message' => 'Berhasil menambah data',
             'data' => $student
         ];
-
-        // mengembalikan data json dan kode 201(resource berhasil ditambahkan)
-        return response()->json($data,201);
+    
+        // Mengembalikan data JSON dan kode 201 (resource berhasil ditambahkan)
+        return response()->json($data, 201);
     }
 
     public function show(string $id)
@@ -91,6 +109,10 @@ class StudentController extends Controller
     public function destroy(string $id)
     {
         $student = Student::find($id);
+
+        if (!$student) {
+            return response()->json(['message' => 'Data tidak ditemukan!'], 404);
+        }
 
         $student->delete();
 
