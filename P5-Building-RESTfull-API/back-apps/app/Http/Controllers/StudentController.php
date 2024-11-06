@@ -33,30 +33,38 @@ class StudentController extends Controller
 
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'nama' => 'required|string|max:255',
-            'nim' => 'required|string|max:20',
-            'email' => 'required|email',
-            'jurusan' => 'required|string|max:100'
-        ]);
-    
-        if ($validator->fails()) {
+        try {
+            // Validasi otomatis, Laravel akan menangani kesalahan validasi
+            $validatedData = $request->validate([
+                'nama' => 'required|string|max:255',
+                'nim' => 'required|string|max:20',
+                'email' => 'required|email',
+                'jurusan' => 'required|string|max:100'
+            ], [
+                'nama.required' => 'Field nama harus diisi.',
+                'nim.required' => 'Field NIM harus diisi.',
+                'email.required' => 'Field email harus diisi.',
+                'email.email' => 'Format email tidak valid.',
+                'jurusan.required' => 'Field jurusan harus diisi.',
+            ]);
+
+            // Jika validasi berhasil, lanjutkan menyimpan data
+            $student = Student::create($validatedData);
+
+            return response()->json([
+                'message' => 'Berhasil menambah data',
+                'data' => $student
+            ], 201);
+
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            // Tangani error validasi secara manual untuk memastikan respon JSON
             return response()->json([
                 'message' => 'Validasi gagal',
-                'errors' => $validator->errors()
+                'errors' => $e->errors()
             ], 422);
         }
-    
-        $input = $validator->validated();
-        $student = Student::create($input);
-    
-        $data = [
-            'message' => 'Berhasil menambah data',
-            'data' => $student
-        ];
-        
-        return response()->json($data, 201);
     }
+
 
     public function show(string $id)
     {
