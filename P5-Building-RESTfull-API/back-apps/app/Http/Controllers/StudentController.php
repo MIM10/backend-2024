@@ -77,12 +77,21 @@ class StudentController extends Controller
             return response()->json(['message' => 'Data tidak ditemukan!'], 404);
         }
 
-        $input = [
-            'nama' => $request->nama ?? $student->nama,
-            'nim' => $request->nim ?? $student->nim,
-            'email' => $request->email ?? $student->email,
-            'jurusan' => $request->jurusan ?? $student->jurusan,
-        ];
+        $validator = Validator::make($request->all(), [
+            'nama' => 'required|string|max:255',
+            'nim' => 'required|string|max:20',
+            'email' => 'required|email',
+            'jurusan' => 'required|string|max:100'
+        ]);
+    
+        if ($validator->fails()) {
+            return response()->json([
+                'message' => 'Validasi gagal',
+                'errors' => $validator->errors()
+            ], 422);
+        }
+        
+        $input = $validator->validated();
 
         $student->update($input);
 
