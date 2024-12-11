@@ -2,7 +2,7 @@ const fruits = require(`./fruits`);
 
 const index = () => {
     for (const fruit of fruits) {
-        console.log(`-  ${fruit}`);
+        console.log(`- ${fruit}`);
     }
 }
 
