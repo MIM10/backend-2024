@@ -9,4 +9,3 @@ const main = () => {
 };
 
 main();
-// rstrshreshreahrewahrewae
