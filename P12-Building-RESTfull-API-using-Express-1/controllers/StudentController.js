@@ -4,11 +4,15 @@ class StudentController {
     index(req, res) {
         const students = Student.all();
 
-        const data = {
-            message: "Mmenampilkan semua student",
-            data: students
-        }
-
-        res.json(data);
+        Student.all((student) => {
+            const data = {
+                message: "Menampilkan semua student",
+                data: student
+            }
+    
+            res.json(data);
+        });
     }
 }
+
+module.exports = new StudentController();

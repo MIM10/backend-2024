@@ -1,11 +1,11 @@
 const db = require('../config/database');
 
 class Student {
-    static all() {
+    static all(callback) {
         const query = `SELECT * FROM students`;
 
         db.query(query, (err, result) => {
-            return results;
+            return result;
         });
     }
 }
