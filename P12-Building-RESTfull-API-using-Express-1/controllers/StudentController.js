@@ -1,17 +1,17 @@
 const Student = require('../models/Student');
 
 class StudentController {
-    index(req, res) {
-        const students = Student.all();
+    async index(req, res) {
+        const students = await Student.all();
 
-        Student.all((student) => {
-            const data = {
-                message: "Menampilkan semua student",
-                data: student
-            }
-    
-            res.json(data);
-        });
+        const data = {
+            message: "Menampilkan semua student",
+            data: students
+        }
+
+        res.json(data);
+        // Student.all((student) => {
+        // });
     }
 }
 

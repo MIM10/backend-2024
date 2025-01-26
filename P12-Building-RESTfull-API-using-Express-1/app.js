@@ -7,8 +7,8 @@ const app = express();
 const { APP_PORT } = process.env;
 
 // menggunakan middleware
-// app.use(express.json());
-// app.use(express.urlencoded());
+app.use(express.json());
+app.use(express.urlencoded());
 
 // menggunakan routing (router)
 app.use(router);

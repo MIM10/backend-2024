@@ -2,10 +2,12 @@ const db = require('../config/database');
 
 class Student {
     static all(callback) {
-        const query = `SELECT * FROM students`;
+        return new Promise((resolve, reject) => {
+            const query = `SELECT * FROM students`;
 
-        db.query(query, (err, result) => {
-            return result;
+            db.query(query, (err, result) => {
+                resolve(result);
+            });
         });
     }
 }
