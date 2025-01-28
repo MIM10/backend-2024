@@ -10,8 +10,29 @@ class StudentController {
         }
 
         res.json(data);
-        // Student.all((student) => {
-        // });
+    }
+
+    async show(req, res) {
+        const id = req.params.id;
+        const student = await Student.find(id);
+
+        const data = {
+            message: "Menampilkan student dengan id = " + id,
+            data: student
+        }
+
+        res.json(data);
+    }
+
+    async create(req, res) {
+        const student = await Student.create(req.body);
+
+        const data = {
+            message: "Berhasil menambahkan student",
+            data: student
+        }
+
+        res.json(data);
     }
 }
 

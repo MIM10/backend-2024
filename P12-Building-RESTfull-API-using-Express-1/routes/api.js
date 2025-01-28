@@ -16,6 +16,8 @@ router.get("/", (req, res) => {
 
 // Membuat routing alumni
 router.get("/students", StudentController.index);
+router.get("/students/:id", StudentController.show);
+router.post("/students", StudentController.create);
 
 // export router
 module.exports = router;
