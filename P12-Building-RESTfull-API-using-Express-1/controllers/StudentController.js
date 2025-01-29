@@ -32,7 +32,7 @@ class StudentController {
             data: student
         }
 
-        res.json(data);
+        res.status(201).json(data);
     }
 }
 
