@@ -67,14 +67,29 @@ class Student {
 
     static delete(id) {
         return new Promise((resolve, reject) => {
+            const selectQuery = `SELECT * FROM students WHERE id = ?`;
             const query = `DELETE FROM students WHERE id = ?`;
 
-            db.query(query, [id], (err, result) => {
+            db.query(selectQuery, [id], (err, result) => {
                 if (err) {
                     return reject(err);
                 }
 
-                resolve(result);
+                if (!result.length) {
+                    return reject(new Error('Student tidak ditemukan'));
+                }
+
+                const deletedStudent = result[0];
+
+                const deleteQuery = `DELETE FROM students WHERE id = ?`;
+
+                db.query(deleteQuery, [id], (err, deleteResult) => {
+                    if (err) {
+                        return reject(err);
+                    }
+
+                    resolve({ affectedRows: deleteResult.affectedRows, deletedStudent });
+                });
             });
         });
     }
