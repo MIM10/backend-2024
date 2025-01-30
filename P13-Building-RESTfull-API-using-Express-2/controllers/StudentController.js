@@ -99,6 +99,25 @@ class StudentController {
             })
         }
     }
+
+    async findByJurusan(req, res) {
+        try {
+            const jurusan = req.params.jurusan;
+            const students = await Student.findByJurusan(jurusan);
+    
+            const data = {
+                message: `Menampilkan mahasiswa dengan jurusan ${jurusan}`,
+                data: students
+            };
+    
+            res.status(200).json(data);
+        } catch (error) {
+            res.status(404).json({
+                message: "Mahasiswa dengan jurusan tersebut tidak ditemukan",
+                error: error.message
+            });
+        }
+    }    
 }
 
 module.exports = new StudentController();

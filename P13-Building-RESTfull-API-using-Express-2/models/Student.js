@@ -93,6 +93,24 @@ class Student {
             });
         });
     }
+
+    static findByJurusan(jurusan) {
+        return new Promise((resolve, reject) => {
+            const query = `SELECT * FROM students WHERE jurusan = ?`;
+    
+            db.query(query, [jurusan], (err, result) => {
+                if (err) {
+                    return reject(err);
+                }
+                
+                if (result.length === 0) {
+                    return reject(new Error('Data tidak ditemukan'));
+                }
+    
+                resolve(result);
+            });
+        });
+    }    
 }
 
 module.exports = Student;

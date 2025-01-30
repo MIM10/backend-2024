@@ -20,6 +20,7 @@ router.get("/students/:id", StudentController.show);
 router.post("/students", StudentController.create);
 router.put("/students/:id", StudentController.update);
 router.delete("/students/:id", StudentController.delete);
+router.get("/students/jurusan/:jurusan", StudentController.findByJurusan);
 
 // export router
 module.exports = router;
